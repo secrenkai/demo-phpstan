@@ -32,7 +32,7 @@ jobs:
     - name: Install dependencies
       run: composer install --prefer-dist --no-progress
 
-    - name: Run PHPStan With Config
+    - name: Run PHPStan With Configs
       working-directory: ./
       run: |
         ./vendor/bin/phpstan  --version
