@@ -3,8 +3,10 @@ PHPSTAN_FILE=./.ci/phpstan.phar
 if [ -f "$PHPSTAN_FILE" ]; then
     echo "PHPStan OK"
 else
+    echo "Start to downloading PHPStan ..."
     curl --silent -H "User-agent: cURL (https://github.com/php-actions)" -L \
         "https://github.com/phpstan/phpstan/releases/latest/download/phpstan.phar" > ./.ci/phpstan.phar
+    chmod +x ./.ci/phpstan.phar
     echo "PHPStan Download OK"
 fi
 
