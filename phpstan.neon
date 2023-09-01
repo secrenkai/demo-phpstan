@@ -1,0 +1,11 @@
+parameters:
+	level: 9
+	paths:
+		- src
+		- inc
+	excludePaths:
+		analyseAndScan:
+			- .github/
+	parallel:
+		maximumNumberOfProcesses: 2
+		processTimeout: 15.0
