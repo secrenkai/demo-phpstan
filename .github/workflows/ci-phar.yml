@@ -12,7 +12,7 @@ jobs:
       - name: Get custom PHAR
         run: |
           curl --silent -H "User-agent: cURL (https://github.com/php-actions)" -L \
-          "https://www.getrelease.download/phpstan/phpstan/1.10.3/phar" > custom-phpstan.phar
+          "https://github.com/phpstan/phpstan/releases/latest/download/phpstan.phar" > custom-phpstan.phar
 
       - name: PHPStan Static Analysis
         uses: php-actions/phpstan@v3
