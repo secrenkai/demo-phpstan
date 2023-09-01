@@ -9,8 +9,5 @@ for passing multiple directories to PHPStan.
 Have a great day!
 STR;
     }
-    public function te()
-    {
-        
-    }
+ 
 }

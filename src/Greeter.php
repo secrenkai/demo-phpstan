@@ -8,11 +8,8 @@ class Greeter
 	{
 		if ($name) {
 			return "Hello, $name!";
-		} else {
-			return [];
-		}
-
-		return "Hello!" ;  
+		} 
+		return "Hello!" ; 
 	}
 
 }

@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+cp .ci/pre-commit .git/hooks/pre-commit
+cp .ci/pre-push .git/hooks/pre-push

@@ -36,4 +36,4 @@ jobs:
       working-directory: ./
       run: |
         ./vendor/bin/phpstan  --version
-        ./vendor/bin/phpstan --configuration=./phpstan.neon
+        ./vendor/bin/phpstan --configuration=./.ci/phpstan.neon
