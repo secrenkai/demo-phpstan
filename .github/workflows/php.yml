@@ -33,7 +33,11 @@ jobs:
       run: composer install --prefer-dist --no-progress
 
     - name: Run PHPStan With Config
-      run: vendor/bin/phpstan -c phpstan.neon
+      working-directory: ./
+      run: |
+        pwd
+        ls -alh phpstan.neon
+        ./vendor/bin/phpstan -c phpstan.neon
 
     # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
     # Docs: https://getcomposer.org/doc/articles/scripts.md
