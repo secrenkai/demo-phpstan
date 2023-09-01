@@ -4,7 +4,7 @@ namespace App;
 
 class Greeter
 {
-	public function greet(string $name = null): string
+	public function greet(string $name = ''): string
 	{
 		if ($name) {
 			return "Hello, $name!";
@@ -16,7 +16,15 @@ class Greeter
 		if ($name == 'asss') exit;
 
 		if ($name == 'aaaaa') {
-			if (strlen($name) == 5) return 'hi';
+			
+			sleep(1);
+
+			if (strlen($name) == 5) 
+			return 'hi';
+			
+			
+			
+	sleep(2);
 		}
 		return "Hello!" ;  
 	}

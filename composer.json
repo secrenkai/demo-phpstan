@@ -1,7 +1,7 @@
 {
 	"name": "php-actions/example-phpstan",
 	"description": "Example project using php-actions/phpstan",
-
+	"license": "proprietary",
 	"require-dev": {
 		"ext-curl": "*",
 		"ext-dom": "*",
