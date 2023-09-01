@@ -35,5 +35,5 @@ jobs:
     - name: Run PHPStan With Config
       working-directory: ./
       run: |
-        ./vendor/bin/phpstan  --version
-        ./vendor/bin/phpstan --configuration=./.ci/phpstan.neon
+        ./.ci/phpstan.phar --version
+        ./.ci/phpstan.phar --configuration=./.ci/phpstan.neon

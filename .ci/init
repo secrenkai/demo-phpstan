@@ -1,3 +1,13 @@
 #!/usr/bin/env bash
+PHPSTAN_FILE=./.ci/phpstan.phar
+if [ -f "$PHPSTAN_FILE" ]; then
+    echo "PHPStan OK"
+else
+    curl --silent -H "User-agent: cURL (https://github.com/php-actions)" -L \
+        "https://github.com/phpstan/phpstan/releases/latest/download/phpstan.phar" > ./.ci/phpstan.phar
+    echo "PHPStan Download OK"
+fi
+
 cp .ci/pre-commit .git/hooks/pre-commit
 cp .ci/pre-push .git/hooks/pre-push
+echo "Initialize OK"
