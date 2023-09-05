@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
 COMPOSER_FILE=./composer.phar
-if [ -f "$COMPOSER_FILE" ]; then
+if hash composer 2>/dev/null
     echo "Composer OK"
 else
     echo "Start to downloading Composer ..."
-    curl -sS https://getcomposer.org/installer | php && echo "Downloading composer success"
+    curl -sS https://getcomposer.org/installer | php && mv composer.phar /usr/local/bin/composer && echo "Downloading composer success"
 fi
 
 if [ -f "vendor/yiisoft/yii2/Yii.php" ]; then
@@ -14,7 +14,6 @@ if [ -f "vendor/yiisoft/yii2/Yii.php" ]; then
 else
     cp .ci/phpstan_without_bootstrap.neon phpstan.neon
 fi
-
 
 if [ -f ".git/config" ]; then
     cp .ci/githook_pre_check .git/hooks/pre-commit

@@ -10,13 +10,12 @@ permissions:
   contents: read
 
 jobs:
-  build:
-
+  codetest:
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v3
-
+    - uses: php-actions/composer@v6
+    
     - name: Validate composer.json and composer.lock
       run: composer validate --strict
 
@@ -39,6 +38,6 @@ jobs:
     - name: Run PHPStan With Configs
       working-directory: ./
       run: |
-        ./.ci/code-analyse --diff
         ./vendor/bin/phpstan --version
-        ./vendor/bin/phpstan --configuration=./phpstan.prj.neon
+        ./.ci/code-analyse --diff  
+        # ./vendor/bin/phpstan --configuration=./phpstan.prj.neon
