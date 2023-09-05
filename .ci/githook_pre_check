@@ -3,7 +3,35 @@ pwd
 echo ""
 echo "Composer File Validate:"
 ./composer.phar validate --strict
+
+analyser=""
+check_phpstan_available() {
+    echo "Checking phpstan path"
+
+    if hash phpstan 2>/dev/null
+    then
+        analyser=phpstan
+        return 0
+    elif [ -f "vendor/bin/phpstan" ]
+    then
+        analyser=vendor/bin/phpstan
+        return 0
+    elif [ -f ".ci/phpstan.phar" ]
+    then
+        analyser=.ci/phpstan.phar
+        return 0
+    else
+        return 1
+    fi
+}
+
+download_phpstan() {
+    ./.ci/phpstan_download
+    analyser=./.ci/phpstan.phar
+}
+
+check_phpstan_available || download_phpstan
+echo "use analyser : $analyser"
 echo ""
 echo "PHP Code Static Analysis:"
-.ci/code-analyse --diff 
-git diff --diff-filter=M --name-only --cached|grep -E '\.php$'|xargs -r .ci/phpstan.phar analyse --debug --configuration=phpstan.prj.neon --memory-limit=1G
+git diff --diff-filter=M --name-only --cached|grep -E '\.php$'|xargs -r $analyser analyse --debug --configuration=phpstan.prj.neon --memory-limit=1G
