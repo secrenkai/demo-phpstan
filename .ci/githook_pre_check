@@ -6,4 +6,4 @@ echo "Composer File Validate:"
 echo ""
 echo "PHP Code Static Analysis:"
 .ci/code-analyse --diff 
-# git diff --diff-filter=M --name-only --cached|grep -E '\.php$'|xargs -r .ci/phpstan.phar analyse --debug --configuration=phpstan.neon --memory-limit=1G
+git diff --diff-filter=M --name-only --cached|grep -E '\.php$'|xargs -r .ci/phpstan.phar analyse --debug --configuration=phpstan.prj.neon --memory-limit=1G
