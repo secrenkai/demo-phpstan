@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+pwd
+echo ""
+echo "Composer File Validate:"
+./composer.phar validate --strict
+echo ""
+echo "PHP Code Static Analysis:"
+git diff --diff-filter=M --name-only --cached|grep -E '\.php$'|xargs -r .ci/phpstan.phar analyse --configuration=./.ci/phpstan.neon

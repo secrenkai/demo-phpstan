@@ -1,0 +1,4 @@
+{
+    "phpstan.binPath": ".ci/phpstan.phar",
+    "phpstan.configFile": ".ci/phpstan.neon"
+}
