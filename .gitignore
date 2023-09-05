@@ -1,2 +1,5 @@
 /vendor/
 /.phpunit.result.cache
+composer.phar
+phpstan.neon
+phpstan.php
