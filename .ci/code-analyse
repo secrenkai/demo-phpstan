@@ -3,7 +3,7 @@
 set -eo pipefail
 
 REVISION=$(git rev-parse --short=8 HEAD)
-ANALYSE_DIR=${1-src}
+ANALYSE_DIR=${1-.}
 targetPath=${1:-$ANALYSE_DIR}
 echo "targetPath= $targetPath"
 targetFile=""
