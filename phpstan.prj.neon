@@ -1,0 +1,12 @@
+includes:
+	- phpstan.neon
+parameters:
+	paths:
+		- src
+		- inc
+	excludePaths:
+		analyse:
+			- vendor
+		analyseAndScan:
+			- .ci/
+			- .github/

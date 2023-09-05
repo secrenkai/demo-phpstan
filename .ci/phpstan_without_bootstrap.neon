@@ -6,12 +6,6 @@ parameters:
 	# editorUrl: '%%file%%:%%line%%'
 	editorUrl: 'vscode://file/%%file%%:%%line%%'
 	# editorUrl: 'phpstorm://open?file=%%file%%&line=%%line%%'
-	paths:
-		- api
-		- backend
-		- common
-		- console
-		- environments
 	excludePaths:
 		analyse:
 			- vendor

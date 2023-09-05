@@ -8,12 +8,6 @@ parameters:
 	# editorUrl: 'phpstorm://open?file=%%file%%&line=%%line%%'
 	bootstrapFiles:
 		- phpstan.php
-	paths:
-		- api
-		- backend
-		- common
-		- console
-		- environments
 	excludePaths:
 		analyse:
 			- vendor
