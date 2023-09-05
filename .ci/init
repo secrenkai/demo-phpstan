@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 
-COMPOSER_FILE=./composer.phar
-if hash composer 2>/dev/null
-    echo "Composer OK"
-else
-    echo "Start to downloading Composer ..."
-    curl -sS https://getcomposer.org/installer | php && mv composer.phar /usr/local/bin/composer && echo "Downloading composer success"
-fi
+# COMPOSER_FILE=./composer.phar
+# if hash composer 2>/dev/null
+#     echo "Composer OK"
+# else
+#     echo "Start to downloading Composer ..."
+#     curl -sS https://getcomposer.org/installer | php && mv composer.phar /usr/local/bin/composer && echo "Downloading composer success"
+# fi
 
 if [ -f "vendor/yiisoft/yii2/Yii.php" ]; then
     cp .ci/phpstan.php phpstan.php
