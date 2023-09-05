@@ -48,13 +48,23 @@ download_composer() {
     curl -sS https://getcomposer.org/installer | php && echo "Downloading composer success"
 }
 
+prepare_phpstan_config() {
+    if [ -f "vendor/yiisoft/yii2/Yii.php" ]; then
+        cp .ci/phpstan.php phpstan.php
+        cp .ci/phpstan.neon phpstan.neon
+    else
+        cp .ci/phpstan_without_bootstrap.neon phpstan.neon
+    fi
+}
+
 code_analyse() {
     echo "checking analyse env"
 
     check_phpstan_available || download_phpstan
     echo "use analyser : $analyser"
 
-    [[ ! -e ./phpstan.neon ]] && cp .ci/phpstan.neon ./
+    [[ ! -e ./phpstan.neon ]] && prepare_phpstan_config
+
     
     echo "PHP Code Static Analysis:"
     $analyser analyse --configuration=phpstan.neon --memory-limit=1G $targetPath
