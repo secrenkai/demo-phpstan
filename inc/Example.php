@@ -11,6 +11,6 @@ STR;
     }
     private function test()
     {
-        echo "s"ss
+        echo "s"ssv
     }
 }
