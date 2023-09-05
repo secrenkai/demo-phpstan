@@ -10,7 +10,7 @@
 
 if [ -f "vendor/yiisoft/yii2/Yii.php" ]; then
     cp .ci/phpstan.php phpstan.php
-    cp .ci/phpstan.neon phpstan.neon
+    cp .ci/phpstan_with_bootstrap.neon phpstan.neon
 else
     cp .ci/phpstan_without_bootstrap.neon phpstan.neon
 fi
