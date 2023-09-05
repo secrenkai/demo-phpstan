@@ -15,7 +15,11 @@ else
     cp .ci/phpstan_without_bootstrap.neon phpstan.neon
 fi
 
-cp .ci/pre-commit .git/hooks/pre-commit
-cp .ci/pre-push .git/hooks/pre-push
+
+if [ -f ".git/config" ]; then
+    cp .ci/githook_pre_check .git/hooks/pre-commit
+    cp .ci/githook_pre_check .git/hooks/pre-push
+    echo "git hook done"
+fi
 
 echo "Initialize Done"
