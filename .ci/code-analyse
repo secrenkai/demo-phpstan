@@ -56,6 +56,13 @@ prepare_phpstan_config() {
     else
         cp .ci/phpstan_without_bootstrap.neon phpstan.neon
     fi
+
+    if [ -f "phpstan.prj.neon" ]; then
+        echo "phpstan.prj.neon exist"
+    else
+        cp .ci/phpstan.prj.neon phpstan.prj.neon
+        echo "new prj config: phpstan.prj.neon"
+    fi
 }
 
 code_analyse() {
@@ -64,10 +71,10 @@ code_analyse() {
     check_phpstan_available || download_phpstan
     echo "use analyser : $analyser"
 
-    [[ ! -e ./phpstan.neon ]] && prepare_phpstan_config
+    prepare_phpstan_config
 
     echo "PHP Code Static Analysis:"
-    $analyser analyse --configuration=phpstan.neon --memory-limit=1G $targetPath
+    $analyser analyse --configuration=phpstan.prj.neon --memory-limit=1G $targetPath
 }
 
 code_analyse_diff() {
