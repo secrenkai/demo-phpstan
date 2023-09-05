@@ -1,0 +1,99 @@
+#!/usr/bin/env bash
+
+set -eo pipefail
+
+REVISION=$(git rev-parse --short=8 HEAD)
+ANALYSE_DIR=${1-src}
+targetPath=${1:-$ANALYSE_DIR}
+targetFile=""
+analyser=""
+
+check_phpstan_available() {
+    echo "Checking phpstan path"
+
+    if hash phpstan 2>/dev/null
+    then
+        analyser=phpstan
+        return 0
+    elif [ -f "vendor/bin/phpstan" ]
+    then
+        analyser=vendor/bin/phpstan
+        return 0
+    elif [ -f ".ci/phpstan.phar" ]
+    then
+        analyser=.ci/phpstan.phar
+        return 0
+    else
+        return 1
+    fi
+}
+
+download_phpstan() {
+    PHPSTAN_FILE=./.ci/phpstan.phar
+    if [ -f "$PHPSTAN_FILE" ]; then
+        echo "PHPStan OK"
+    else
+        echo "Start to downloading PHPStan ..."
+        curl --silent -H "User-agent: cURL (https://github.com/php-actions)" -L \
+            "https://github.com/phpstan/phpstan/releases/latest/download/phpstan.phar" > $PHPSTAN_FILE
+        chmod +x $PHPSTAN_FILE
+        echo "PHPStan Download OK"
+    fi
+
+    analyser=./.ci/phpstan.phar
+}
+
+download_composer() {
+    echo "Downloading composer"
+    curl -sS https://getcomposer.org/installer | php && echo "Downloading composer success"
+}
+
+code_analyse() {
+    echo "checking analyse env"
+
+    check_phpstan_available || download_phpstan
+    echo "use analyser : $analyser"
+
+    [[ ! -e ./phpstan.neon ]] && cp .ci/phpstan.neon ./
+    
+    echo "PHP Code Static Analysis:"
+    $analyser analyse --configuration=phpstan.neon --memory-limit=1G $targetPath
+}
+
+code_analyse_diff() {
+    [[ $CI_COMMIT_SHA ]] || list=$(git status -s |awk '{print $2}'|awk BEGIN{RS=EOF}'{gsub(/\n/," ");print}')
+    [[ $list ]] || list=$(git diff-tree --no-commit-id --name-only -r $REVISION --diff-filter=ACMRT |awk BEGIN{RS=EOF}'{gsub(/\n/," ");print}')
+    files=""
+    for file in $list; do
+        if [ ${file:0:3} == "src" ]
+        then
+            files="${files} ${file}"
+        fi
+    done
+    files=$(echo $files|tr " " ",")
+    if [[ $files ]]
+    then
+        targetPath=$files
+        code_analyse
+    else
+        echo -e "\033[33;1mNo file needs analyse\033[0m"
+    fi
+}
+
+operator=$1
+if [ -z $1 ]
+then
+    echo -e "\033[36;1mCode Analyse all...\033[0m"
+    code_analyse
+else
+    case "$operator" in
+        --diff)
+            echo -e "\033[36;1mCode Analyse diff...\033[0m"
+            code_analyse_diff
+            ;;
+        *)
+            echo -e "\033[36;1mCode Analyse all*...\033[0m"
+            code_analyse
+            ;;
+    esac
+fi

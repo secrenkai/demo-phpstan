@@ -1,0 +1,50 @@
+parameters:
+	level: max
+	reportUnmatchedIgnoredErrors: false
+	treatPhpDocTypesAsCertain: false
+	editorUrlTitle: '%%relFile%%:%%line%%'
+	# editorUrl: '%%file%%:%%line%%'
+	editorUrl: 'vscode://file/%%file%%:%%line%%'
+	# editorUrl: 'phpstorm://open?file=%%file%%&line=%%line%%'
+	bootstrapFiles:
+		- phpstan.php
+	paths:
+		- api
+		- backend
+		- common
+		- console
+		- environments
+	excludePaths:
+		analyse:
+			- vendor
+		analyseAndScan:
+			- .ci/
+			- .github/
+			- api/views
+			- backend/views
+			- common/views
+			- console/views
+			- environments/views
+	ignoreErrors:
+		- '#PHPDoc tag.+#'
+		- '#Property .* has no type specified.#'
+		- '#Access to an undefined property yii\\base\\Application::\$#'
+		- '#Method .*? has no return type specified#'
+		- '#Method .*? has parameter .*? with no type specified#'
+		- '#Variable \$.*? in empty\(\) always exists and is not falsy#'
+		- '#Call to an undefined method object::#'
+		- '#Call to an undefined method yii#'
+		- '#Parameter \#\d .*? of function date expects \w+, \w+|\w+ given#'
+		- '#Cannot access property \$\w on yii\\base\\#'
+		- '#Cannot access offset .*? on .*?#'
+		- '#Access to an undefined property object::#'
+		- '#Access to an undefined property#'
+		- '#Method .*? has parameter .*? with no value type specified in iterable type array#'
+		- '#Expression on left side of .*? is not nullable#'
+		- '#Cannot call method .*? on yii#'
+		- '#Cannot access property .*? on yii#'
+		- '#Class Yii referenced with incorrect case: yii#'
+
+	parallel:
+		maximumNumberOfProcesses: 2
+		processTimeout: 15.0

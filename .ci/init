@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+COMPOSER_FILE=./composer.phar
+if [ -f "$COMPOSER_FILE" ]; then
+    echo "Composer OK"
+else
+    echo "Start to downloading Composer ..."
+    curl -sS https://getcomposer.org/installer | php && echo "Downloading composer success"
+fi
+
+if [ -f "vendor/yiisoft/yii2/Yii.php" ]; then
+    cp .ci/phpstan.php phpstan.php
+    cp .ci/phpstan.neon phpstan.neon
+else
+    cp .ci/phpstan_without_bootstrap.neon phpstan.neon
+fi
+
+cp .ci/pre-commit .git/hooks/pre-commit
+cp .ci/pre-push .git/hooks/pre-push
+
+echo "Initialize Done"
