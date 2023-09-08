@@ -34,11 +34,6 @@ download_phpstan() {
     analyser=./.ci/phpstan.phar
 }
 
-download_composer() {
-    echo "Downloading composer"
-    curl -sS https://getcomposer.org/installer | php && echo "Downloading composer success"
-}
-
 prepare_phpstan_config() {
     if [ -f "vendor/yiisoft/yii2/Yii.php" ]; then
         cp .ci/phpstan.php phpstan.php

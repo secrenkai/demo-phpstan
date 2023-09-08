@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+PHPSTAN_FILE=./.ci/composer.phar
+echo "Downloading composer"
+curl -sS https://getcomposer.org/installer | php && echo "Downloading composer success"
+cp composer.phar $PHPSTAN_FILE

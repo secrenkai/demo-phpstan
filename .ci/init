@@ -8,6 +8,40 @@
 #     curl -sS https://getcomposer.org/installer | php && mv composer.phar /usr/local/bin/composer && echo "Downloading composer success"
 # fi
 
+check_composer_available() {
+    echo "Checking composer path"
+    if hash composer 2>/dev/null
+    then
+        return 0
+    elif [ -f "vendor/bin/composer" ]
+    then
+        return 0
+    elif [ -f "./composer.phar" ]
+    then
+        return 0
+    elif [ -f ".ci/composer.phar" ]
+    then
+        return 0
+    else
+        return 1
+    fi
+}
+check_phpstan_available() {
+    echo "Checking phpstan path"
+    if hash phpstan 2>/dev/null
+    then
+        return 0
+    elif [ -f "vendor/bin/phpstan" ]
+    then
+        return 0
+    elif [ -f ".ci/phpstan.phar" ]
+    then
+        return 0
+    else
+        return 1
+    fi
+}
+
 if [ -f "vendor/yiisoft/yii2/Yii.php" ]; then
     cp .ci/phpstan.php phpstan.php
     cp .ci/phpstan_with_bootstrap.neon phpstan.neon
@@ -20,5 +54,8 @@ if [ -f ".git/config" ]; then
     cp .ci/githook_pre_check .git/hooks/pre-push
     echo "git hook done"
 fi
+
+check_composer_available || ./.ci/composer_download
+check_phpstan_available || ./.ci/phpstan_download
 
 echo "Initialize Done"

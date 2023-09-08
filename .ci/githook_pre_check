@@ -1,8 +1,40 @@
 #!/usr/bin/env bash
 pwd
 echo ""
+
+phppkgmgr=""
+check_composer_available() {
+    echo "Checking composer path"
+
+    if hash composer 2>/dev/null
+    then
+        phppkgmgr=composer
+        return 0
+    elif [ -f "vendor/bin/composer" ]
+    then
+        phppkgmgr=vendor/bin/composer
+        return 0
+    elif [ -f "./composer.phar" ]
+    then
+        phppkgmgr=./composer.phar
+        return 0
+    elif [ -f ".ci/composer.phar" ]
+    then
+        phppkgmgr=.ci/composer.phar
+        return 0
+    else
+        return 1
+    fi
+}
+
+download_composer() {
+    ./.ci/composer_download
+    phppkgmgr=./.ci/composer.phar
+}
+
+check_composer_available || download_composer
 echo "Composer File Validate:"
-./composer.phar validate --strict
+$phppkgmgr validate --strict
 
 analyser=""
 check_phpstan_available() {
