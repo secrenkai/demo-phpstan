@@ -3,3 +3,4 @@
 composer.phar
 phpstan.php
 phpstan.neon
+.ci/phpstan.phar
